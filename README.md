@@ -86,52 +86,6 @@ library(sf)
 library(sp)
 
 
-# MapasBiomas Map
-#Import tif file into environment WARNING -- it takes a bit to upload!
-attach("brasil_coverage_2023.tif")
-raster_data <- raster("brasil_coverage_2023.tif")
-
-
-## Convert the Latitude/Longitude data to an sf object
-lat_long_sf <- st_as_sf(df_area, coords = c("Longitude", "Latitude"), crs = 4326)
-
-# Create the map with raster and points
-
-#Yellow-Green-Blue
-tm_shape(raster_data) +
-  tm_raster(palette = "YlGnBu", title = "Raster Values") +
-  tm_shape(lat_long_sf) +
-  tm_dots(col = "black", size = 0.1)  # Points on top of the map (red color and size)
-
-#Greens
-tm_shape(raster_data) +
-  tm_raster(palette = "greens", title = "Raster Values") +
-  tm_shape(lat_long_sf) +
-  tm_dots(col = "black", size = 0.1)  # Points on top of the map (red color and size)
-
-
-#Green with white background - 0 is white
-custom_palette <- c("white", RColorBrewer::brewer.pal(9, "Greens"))
-
-#Final
-#Green with white background - 0 is white
-custom_palette <- c("white", RColorBrewer::brewer.pal(9, "Greens"))
-tm_shape(raster_data) +
-  tm_raster(palette = custom_palette, title = "Forest Density") +
-  tm_shape(lat_long_sf) +
-  tm_dots(col = "black", size = 0.1) +
-  tm_layout(
-    title = "2023 Brazil Tree Coverage", 
-    title.size = 1,  # Increase the size of the title
-    title.position = c("center", "top")  # Center the title at the top
-  )
-
-#How to change color on MapasBiomas
-install.packages("cols4all")
-install.packages(c("shinyjs", "kableExtra", "colorblindcheck"))
-library(cols4all)
-cols4all::c4a_gui()
-
 
 
 #Shannon Diversity ####
